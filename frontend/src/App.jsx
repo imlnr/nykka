@@ -4,16 +4,24 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import SignIn from './Pages/SignIn'
 import MainRoutes from './AllRoutes/MainRoutes'
+import { Paper, createTheme } from '@mui/material'
+import { ThemeProvider } from '@emotion/react'
 
 
 function App() {
   const [count, setCount] = useState(0)
-
-
+  const theme = createTheme({
+    palette: {
+      type: "dark",
+    },
+  });
   return (
     <>
-    {/* <SignIn/> */}
-    <MainRoutes/>
+      <ThemeProvider theme={theme}>
+        {/* <Paper> */}
+        <MainRoutes />
+        {/* </Paper> */}
+      </ThemeProvider>
     </>
   )
 }

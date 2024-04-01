@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import GoogleLog from '../Components/GoogleLog';
+
 
 function Copyright(props) {
     return (
@@ -34,6 +37,7 @@ export default function Signup() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
+            name: data.get('name'),
             email: data.get('email'),
             password: data.get('password'),
         });
@@ -111,9 +115,13 @@ export default function Signup() {
                             </Link>
                         </Grid>
                     </Grid>
+                    <FormControlLabel
+                        control={<Typography>or</Typography>}>
+                    </FormControlLabel>
+                    <GoogleLog/>
                 </Box>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
+            <Copyright sx={{ mt: 8, mb: 4 }} ></Copyright>
         </Container>
     );
 }
