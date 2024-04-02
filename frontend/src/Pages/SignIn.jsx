@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GoogleLog from '../Components/GoogleLog';
 import { url } from '../redux/AppReducer/action';
 import { useDispatch } from 'react-redux';
@@ -36,6 +36,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 export default function SignIn() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const toast = useToast();
     const login_fun = ({ email, password }) => {
         return async (dispatch) => {
@@ -56,6 +57,7 @@ export default function SignIn() {
                         duration: 5000,
                         isClosable: true,
                     });
+                    navigate('/')
                 }
             } catch (error) {
                 dispatch({ type: GET_LOGIN_FAILURE })

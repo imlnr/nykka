@@ -12,11 +12,11 @@ import { ChakraProvider } from '@chakra-ui/react';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <GoogleOAuthProvider clientId="29787571856-dqsifnqon7r2vi90qoaif8n80276l5vr.apps.googleusercontent.com">
-        <ChakraProvider>
-        <App />
-        </ChakraProvider>
-      </GoogleOAuthProvider>
+      <ChakraProvider>
+        <GoogleOAuthProvider clientId="29787571856-dqsifnqon7r2vi90qoaif8n80276l5vr.apps.googleusercontent.com">
+          <App />
+        </GoogleOAuthProvider>
+      </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

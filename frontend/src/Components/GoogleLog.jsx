@@ -11,6 +11,7 @@ const GoogleLog = () => {
                 console.log('Login Failed');
             }}
         />
+
     )
 }
 

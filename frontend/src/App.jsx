@@ -8,6 +8,8 @@ import { Paper, createTheme } from '@mui/material'
 import { ThemeProvider } from '@emotion/react'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import { BugsDashboard } from './Pages/BugsDashboard'
+import { ChakraProvider } from '@chakra-ui/react'
 
 
 function App() {
@@ -19,13 +21,13 @@ function App() {
   });
   return (
     <>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        {/* <Paper> */}
-        <MainRoutes />
-        {/* </Paper> */}
-      </ThemeProvider>
-    </Provider>
+      <ChakraProvider>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <MainRoutes />
+          </ThemeProvider>
+        </Provider>
+      </ChakraProvider>
     </>
   )
 }
