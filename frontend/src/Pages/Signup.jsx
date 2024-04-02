@@ -15,7 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import GoogleLog from '../Components/GoogleLog';
-
+import { useDispatch } from 'react-redux';
+import { signup } from '../redux/AppReducer/action';
 
 function Copyright(props) {
     return (
@@ -32,15 +33,25 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
+
 export default function Signup() {
+    const dispatch = useDispatch();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+        const inputData = {
             name: data.get('name'),
             email: data.get('email'),
             password: data.get('password'),
-        });
+            repeatPass: data.get('repeatPassword'),
+            avatar: "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"
+        };
+        console.log(inputData);
+        if(inputData.password !== inputData.repeatPass){
+            console.log("password not matchintg");
+            return;
+        }
+        dispatch(signup(inputData));
     };
 
     return (
@@ -48,7 +59,7 @@ export default function Signup() {
             <CssBaseline />
             <Box
                 sx={{
-                    marginTop: 8,
+                    // marginTop: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -91,6 +102,16 @@ export default function Signup() {
                         id="password"
                         autoComplete="current-password"
                     />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="repeatPassword"
+                        label="Repeat Password"
+                        type="password"
+                        id="repeatPassword"
+                        autoComplete="current-password"
+                    />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
@@ -118,7 +139,7 @@ export default function Signup() {
                     <FormControlLabel
                         control={<Typography>or</Typography>}>
                     </FormControlLabel>
-                    <GoogleLog/>
+                    <GoogleLog />
                 </Box>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} ></Copyright>

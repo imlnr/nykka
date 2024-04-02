@@ -1,4 +1,4 @@
-import { GET_LOGIN_FAILURE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS, GET_THEME_CHANGE } from "./action-type"
+import { GET_LOGIN_FAILURE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS, GET_THEME_CHANGE } from "./action-types"
 
 const initialState = {
     theme: false,
