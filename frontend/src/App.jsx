@@ -21,13 +21,11 @@ function App() {
   });
   return (
     <>
-      <ChakraProvider>
+      <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <MainRoutes />
-          </ThemeProvider>
+          <MainRoutes />
         </Provider>
-      </ChakraProvider>
+      </ThemeProvider>
     </>
   )
 }
