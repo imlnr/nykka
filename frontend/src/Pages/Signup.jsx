@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import GoogleLog from '../Components/GoogleLog';
@@ -33,7 +33,6 @@ function Copyright(props) {
     );
 }
 
-const defaultTheme = createTheme();
 
 export default function Signup() {
     const navigate = useNavigate();

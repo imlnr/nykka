@@ -17,20 +17,14 @@ export const BugCard = ({
     return (
         <>
             <CardBody>
-                <Flex justifyContent={"space-between"} alignItems={"center"}>
+                <Flex justifyContent={"space-between"} padding={"3% 4%"} borderRadius={"8px"} alignItems={"center"}>
                     <Text
                         fontSize={"1.1rem"}
                         color={bgColor === "yellow" ? "black" : "white"}
                     >
                         {name}
                     </Text>
-                    <HStack gap={"0px"}>
-                        <EditModal
-                            bgColor={bgColor}
-                            handleEdit={handleEdit}
-                            columnId={columnId}
-                            id={id}
-                        />
+                    <HStack gap={"0px"} width={"20%"} display={"flex"} justifyContent={"space-around"}>
 
                         <Button
                             variant={"ghost"}
@@ -40,6 +34,12 @@ export const BugCard = ({
                         >
                             <DeleteIcon color={bgColor === "yellow" ? "black" : "white"} />
                         </Button>
+                        <EditModal
+                            bgColor={bgColor}
+                            handleEdit={handleEdit}
+                            columnId={columnId}
+                            id={id}
+                        />
                     </HStack>
                 </Flex>
             </CardBody>

@@ -149,7 +149,7 @@ export const BugsDashboard = () => {
                                     {column.name}
                                 </Text>
 
-                                <AddModal columnId={columnId} handleAdd={handleAdd} />
+                                {/* <AddModal columnId={columnId} handleAdd={handleAdd} /> */}
                             </HStack>
 
                             {/* droppable container where one can drop card after drag */}
@@ -170,6 +170,7 @@ export const BugsDashboard = () => {
                                             }
                                         >
                                             {column.items.map((item, index) => {
+                                                console.log(item.id);
                                                 return (
                                                     // card that can be dragged by user
                                                     <Draggable
