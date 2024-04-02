@@ -1,8 +1,12 @@
 import React from 'react'
-
-const PrivateRoutes = () => {
+import {useSelector} from 'react-redux'
+import SignIn from '../Pages/SignIn'
+const PrivateRoutes = ({children}) => {
+  const state = useSelector(state => state.isLogin)
   return (
-    <div>PrivateRoutes</div>
+    <div>
+      {state?children:<SignIn/>}
+    </div>
   )
 }
 

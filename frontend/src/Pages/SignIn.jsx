@@ -15,10 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import GoogleLog from '../Components/GoogleLog';
 import { url } from '../redux/AppReducer/action';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 import { GET_LOGIN_FAILURE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS } from '../redux/AppReducer/action-types';
+
 
 function Copyright(props) {
     return (
@@ -35,6 +38,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 export default function SignIn() {
+    const isloading = useSelector((state) => state.isLoading);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useToast();
@@ -125,14 +129,25 @@ export default function SignIn() {
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
                     />
-                    <Button
-                        type="submit"
+                    {isloading ? <LoadingButton
+                        loading
                         fullWidth
+                        loadingPosition="start"
+                        startIcon={<SaveIcon />}
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
-                    </Button>
+                        Logging in....
+                    </LoadingButton> :
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign In
+                        </Button>
+                    }
                     <Grid container>
                         <Grid item xs>
                             {/* <Link href="#" variant="body2">
