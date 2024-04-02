@@ -14,6 +14,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import GoogleLog from '../Components/GoogleLog';
+import { url } from '../redux/AppReducer/action';
+import { useDispatch } from 'react-redux';
+import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
+import { GET_LOGIN_FAILURE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS } from '../redux/AppReducer/action-types';
 
 function Copyright(props) {
     return (
@@ -29,19 +34,55 @@ function Copyright(props) {
 }
 
 const defaultTheme = createTheme();
-
 export default function SignIn() {
+    const dispatch = useDispatch();
+    const toast = useToast();
+    const login_fun = ({ email, password }) => {
+        return async (dispatch) => {
+            dispatch({ type: GET_LOGIN_REQUEST })
+            try {
+                const res = await axios.post(`${url}/api/user/login`, {
+                    email: email,
+                    password: password
+                });
+                if (res && res.data.token) {
+                    console.log(res.data);
+                    localStorage.setItem("token", res.data.token)
+                    dispatch({ type: GET_LOGIN_SUCCESS });
+                    toast({
+                        title: "Login Successful",
+                        description: "You have successfully loggedIn.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                }
+            } catch (error) {
+                dispatch({ type: GET_LOGIN_FAILURE })
+                toast({
+                    title: "Login Failed",
+                    description: "Invalid email or password.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+                console.log(error);
+            }
+        }
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
+        const inp = {
             email: data.get('email'),
             password: data.get('password'),
-        });
+        };
+        console.log(inp);
+        dispatch(login_fun(inp))
     };
-
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" sx={{ height: "100vh" }} maxWidth="xs">
             <CssBaseline />
             <Box
                 sx={{
@@ -97,7 +138,7 @@ export default function SignIn() {
                             </Link> */}
                         </Grid>
                         <Grid item>
-                            
+
                             <Link to="/signup" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>
@@ -106,7 +147,7 @@ export default function SignIn() {
                     <FormControlLabel
                         control={<Typography>or</Typography>}>
                     </FormControlLabel>
-                    <GoogleLog/>
+                    <GoogleLog />
                 </Box>
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />

@@ -12,11 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import GoogleLog from '../Components/GoogleLog';
 import { useDispatch } from 'react-redux';
-import { signup } from '../redux/AppReducer/action';
+// import { signup } from '../redux/AppReducer/action';
+import axios from 'axios';
+import { useToast } from '@chakra-ui/react'
 
 function Copyright(props) {
     return (
@@ -33,9 +35,36 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-
 export default function Signup() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const toast = useToast();
+    const signup = ({ name, email, password, avatar }) => {
+        console.log(name, email, password, avatar);
+        return async (dispatch) => {
+            try {
+                const res = await axios.post(`https://nykka-88xf.onrender.com/api/user/register`, {
+                    name: name,
+                    avatar: avatar,
+                    email: email,
+                    password: password
+                });
+                if (res) {
+                    console.log(res.data.msg);
+                    toast({
+                        title: "Registered Successful",
+                        description: "You have account has been successfully registered.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                    navigate('/login')
+                }
+            } catch (error) {
+                console.log("login Failed", error);
+            }
+        }
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -47,15 +76,21 @@ export default function Signup() {
             avatar: "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"
         };
         console.log(inputData);
-        if(inputData.password !== inputData.repeatPass){
+        if (inputData.password !== inputData.repeatPass) {
             console.log("password not matchintg");
-            return;
+            return toast({
+                title: "Password not matching",
+                description: "Please enter the same password.",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+            });;
         }
         dispatch(signup(inputData));
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" sx={{height:"100vh"}} maxWidth="xs">
             <CssBaseline />
             <Box
                 sx={{
